@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.demo.ExpenseTracker.model.Expense;
+//import com.demo.ExpenseTracker.model.Expense;
 import com.demo.ExpenseMapper.CityMapper;
 
-import com.demo.ExpenseTracker.Expdao.ExpDao;
+//import com.demo.ExpenseTracker.Expdao.ExpDao;
 
 
 
@@ -22,31 +22,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.demo.ExpenseTracker.model.Expense;
-import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
-import com.demo.ExpenseTracker.service.ExpenseService;
+//import com.demo.ExpenseTracker.model.Expense;
+//import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
+//import com.demo.ExpenseTracker.service.ExpenseService;
 
 
 @Controller
 public class HomeController {
 
-	@Autowired
-	private ExpenseTrackerModel expenseTracker; 
+//	@Autowired
+//	private ExpenseTrackerModel expenseTracker; 
 	
 	@Autowired
 	private CityMapper cityMapper;
 	
-	ExpDao dao;
+//	ExpDao dao;
 
-	@Autowired
-	private ExpenseService expenseService;
+//	@Autowired
+//	private ExpenseService expenseService;
 
 	
 	@RequestMapping("/")
 	public String home() {
 		return "welcome";
 	}
-
+/*
 
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterLogin() {
@@ -63,7 +63,7 @@ public class HomeController {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		
-		/* model.addAttribute("command", new Expense()); */
+		 model.addAttribute("command", new Expense()); 
 		System.out.println("inside register get");
 		return "register";
 	} 
@@ -75,7 +75,16 @@ public class HomeController {
 		dao.save(exp);
 		System.out.println("inside register post");
 		return "transactionPage";
-	}
+	}*/
+	
+    @RequestMapping(value = "/city", method = RequestMethod.GET)
+    public <T> T getCity() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        
+        map.put("city", cityMapper.findByState("CA"));
+        
+        return (T) map;
+    }
 	
 	@RequestMapping(value = "/city/{state}", method = RequestMethod.GET)
     public <T> T getCity(

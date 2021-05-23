@@ -1,7 +1,7 @@
 package com.demo.ExpenseMapper;
 
 import java.util.List;
-import com.demo.ExpenseTracker.model.*;
+import com.demo.ExpenseTracker.model.City;
 
 
 import org.apache.ibatis.annotations.Mapper;
