@@ -1,8 +1,14 @@
 package com.demo.ExpenseTracker.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.demo.ExpenseTracker.model.Expense;
-import com.demo.ExpenseTracker.Expdao.Expdao;
+import com.demo.ExpenseMapper.CityMapper;
+
+import com.demo.ExpenseTracker.Expdao.ExpDao;
+
 
 
 
@@ -20,6 +26,7 @@ import com.demo.ExpenseTracker.model.Expense;
 import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
 import com.demo.ExpenseTracker.service.ExpenseService;
 
+
 @Controller
 public class HomeController {
 
@@ -27,7 +34,9 @@ public class HomeController {
 	private ExpenseTrackerModel expenseTracker; 
 	
 	@Autowired
-	Expdao dao;
+	private CityMapper cityMapper;
+	
+	ExpDao dao;
 
 	@Autowired
 	private ExpenseService expenseService;
@@ -38,14 +47,7 @@ public class HomeController {
 		return "welcome";
 	}
 
-//	@RequestMapping(value = "/addInitialAmount", method = RequestMethod.POST)
-//	public String addInitialAmount(@RequestParam("basicAmount") String amount, Model model) {
-//		int amt = Integer.parseInt(amount);
-//		expenseTracker.setInitialAmount(amt);
-//		expenseTracker.setMonthlyAmount(amt);
-//		model.addAttribute("amount", amt);
-//		return "addInitialAmount";
-//	}
+
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterLogin() {
 		System.out.println("inside login get");
@@ -57,18 +59,34 @@ public class HomeController {
 		return "transactionPage";
 	}
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterRegister(Model model) {
-		model.addAttribute("command", new Expense());
+	public String enterRegister(Expense exp) {
+		System.out.println("Username= "+ exp.getName());
+		System.out.println("password= "+ exp.getPassword());
+		
+		/* model.addAttribute("command", new Expense()); */
 		System.out.println("inside register get");
 		return "register";
 	} 
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String RegisterForm(@ModelAttribute("exp") Expense exp) {
+	public String RegisterForm(Expense exp) {
+		System.out.println("Username= "+ exp.getName());
+		System.out.println("password= "+ exp.getPassword());
+		
 		dao.save(exp);
 		System.out.println("inside register post");
 		return "transactionPage";
 	}
-
+	
+	@RequestMapping(value = "/city/{state}", method = RequestMethod.GET)
+    public <T> T getCity(
+    	@PathVariable(value = "state") String state	
+    	) {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        
+        map.put("city", cityMapper.findByStates(state));
+        
+        return (T) map;
+    }
 	
 	
 	

@@ -19,8 +19,8 @@ public class ExpDao {
 	}
 	
 	public int save(Expense exp) {
-		String sql="insert into atm(name,password,amount) values('"+exp.getName()+"',"+exp.getPassword()+",'0')";   
-		return template.update(sql);
+		String sql="insert into atm values(?,?,?)";   
+		return template.update(sql, new Object[] {exp.getName(), exp.getPassword(), exp.getAmount()});
 	}
 	
 }
