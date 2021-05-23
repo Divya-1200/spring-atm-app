@@ -15,7 +15,8 @@ public class Expense {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String name;
-	private int amount;
+	private int amount=0;
+	private String password;
 	
 	public int getId() {
 		return id;
@@ -39,6 +40,13 @@ public class Expense {
 	
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+	public int getPassword() {
+		return amount;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }
