@@ -1,9 +1,5 @@
 package com.demo.expensetracker.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 //import com.demo.ExpenseTracker.Expdao.ExpDao;
 
 
@@ -11,29 +7,19 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.demo.expense.mapper.CityMapper;
-
-//import com.demo.ExpenseTracker.model.Expense;
-//import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
-//
-//import com.demo.ExpenseTracker.Expdao.ExpDao;
-import com.demo.expense.mapper.CityMapper;
-
 import com.demo.expensetracker.model.Expense;
 
 
 @Controller
+@SessionAttributes("exp")
 public class HomeController {
 
 //	@Autowired
@@ -47,6 +33,10 @@ public class HomeController {
 //	@Autowired
 //	private ExpenseService expenseService;
 
+	@ModelAttribute("exp")
+	   public Expense setUpUserForm() {
+	      return new Expense();
+	   }
 	
 	@RequestMapping("/")
 	public String home() {
@@ -95,8 +85,8 @@ public class HomeController {
         return (T) map;
     }
 	*/
-
 	
+    
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterLogin(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
@@ -106,7 +96,7 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String loginForm(Expense exp) {
+	public String loginForm(@ModelAttribute("exp")  Expense exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login post");
@@ -122,6 +112,15 @@ public class HomeController {
 		}
 		
 		return "error";
+	}
+	
+	@GetMapping("/two")
+	public String userInfo(@SessionAttribute("exp") Expense exp) {
+
+		System.out.println("Email: " + exp.getName());
+		System.out.println("First Name: " + exp.getPassword());
+
+		return "welcome";
 	}
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterRegister(Expense exp) {
