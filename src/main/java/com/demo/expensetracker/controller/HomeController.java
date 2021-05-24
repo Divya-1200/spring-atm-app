@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.demo.expense.mapper.CityMapper;
 
@@ -26,10 +28,12 @@ import com.demo.expense.mapper.CityMapper;
 //import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
 //
 //import com.demo.ExpenseTracker.Expdao.ExpDao;
-import com.demo.expense.mapper.*;
+import com.demo.expense.mapper.CityMapper;
 
-@RestController
-@RequestMapping(value = "/")
+import com.demo.expensetracker.model.Expense;
+
+
+@Controller
 public class HomeController {
 
 //	@Autowired
@@ -44,10 +48,11 @@ public class HomeController {
 //	private ExpenseService expenseService;
 
 	
-//	@RequestMapping("/")
-//	public String home() {
-//		return "welcome";
-//	}
+	@RequestMapping("/")
+	public String home() {
+//		ModelAndView model = new ModelAndView("welcome");
+		return "welcome";
+	}
 	/*
 	@RequestMapping(value = "one", method = RequestMethod.GET)
     public <T> T listUsers() {
@@ -106,7 +111,7 @@ public class HomeController {
 	public String enterRegister(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
-		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
+//		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
 		
 //		 model.addAttribute("command", new Expense()); 
 		System.out.println("inside register get");
@@ -116,7 +121,7 @@ public class HomeController {
 	public String RegisterForm(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
-		
+		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
 	
 		System.out.println("inside register post");
 		return "transactionPage";
