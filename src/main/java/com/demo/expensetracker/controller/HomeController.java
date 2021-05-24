@@ -48,7 +48,7 @@ public class HomeController {
 //	public String home() {
 //		return "welcome";
 //	}
-	
+	/*
 	@RequestMapping(value = "one", method = RequestMethod.GET)
     public <T> T listUsers() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -67,12 +67,31 @@ public class HomeController {
 //        map.put("three", "four");
 //        map.put("five", "six");
 //        map.put("seven", "eight");
-         cityMapper.insertCity("chennai", "Tamil nadu", "India");
+         String city = "Paris";
+         String state = "Tamil Nadu";
+         String country = "Europe";
+         cityMapper.insertCity(city, state, country);
         
         return (T) map;
     }
+	
+	@RequestMapping(value = "three", method = RequestMethod.GET)
+    public <T> T updateCity() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("one", "two");
+//        map.put("three", "four");
+//        map.put("five", "six");
+//        map.put("seven", "eight");
+         String city = "Paris";
+         String state = "France";
+//         String country = "Europe";
+         cityMapper.updateCity(state, city);
+        
+        return (T) map;
+    }
+	*/
 
-	/*
+	
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterLogin() {
 		System.out.println("inside login get");
@@ -87,6 +106,7 @@ public class HomeController {
 	public String enterRegister(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
+		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
 		
 //		 model.addAttribute("command", new Expense()); 
 		System.out.println("inside register get");
@@ -97,11 +117,11 @@ public class HomeController {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		
-		dao.save(exp);
+	
 		System.out.println("inside register post");
 		return "transactionPage";
 	}
-	*/
+	/*
 	
     @RequestMapping(value = "/city", method = RequestMethod.GET)
     public <T> T getCity() {
@@ -123,7 +143,7 @@ public class HomeController {
         return (T) map;
     }
 	
-	
+	*/
 	
 	
 ////	@RequestMapping(value = "/addExpense", method = { RequestMethod.POST, RequestMethod.GET })
