@@ -49,13 +49,25 @@ public class HomeController {
 //		return "welcome";
 //	}
 	
-	@RequestMapping(value = "1", method = RequestMethod.GET)
+	@RequestMapping(value = "one", method = RequestMethod.GET)
     public <T> T listUsers() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         map.put("one", "two");
         map.put("three", "four");
         map.put("five", "six");
         map.put("seven", "eight");
+        
+        return (T) map;
+    }
+	
+	@RequestMapping(value = "two", method = RequestMethod.GET)
+    public <T> T createCity() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("one", "two");
+//        map.put("three", "four");
+//        map.put("five", "six");
+//        map.put("seven", "eight");
+         cityMapper.insertCity("chennai", "Tamil nadu", "India");
         
         return (T) map;
     }

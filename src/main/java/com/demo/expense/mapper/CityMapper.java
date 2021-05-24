@@ -2,6 +2,7 @@ package com.demo.expense.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -17,4 +18,8 @@ public interface CityMapper {
 	
 	@Select("select * from city where state = #{state}")
 	List<City> findByStates(@Param("state") String state);
+	
+	@Insert("insert into city (name, state, country) values (#{name}, #{state}, #{country})") 
+	void insertCity(@Param("name")String name , @Param("state") String state, @Param("country") String country);
+			
 }
