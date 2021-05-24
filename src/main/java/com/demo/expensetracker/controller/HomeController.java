@@ -114,7 +114,25 @@ public class HomeController {
 		return "error";
 	}
 	
-	@GetMapping("/two")
+	@GetMapping("/deposit")
+	public String depositAmt(@SessionAttribute("exp") Expense exp) {
+
+		System.out.println("Email: " + exp.getName());
+		System.out.println("First Name: " + exp.getPassword());
+
+		return "welcome";
+	}
+	
+	@GetMapping("/withdrawal")
+	public String withdrawalAmt(@SessionAttribute("exp") Expense exp) {
+
+		System.out.println("Email: " + exp.getName());
+		System.out.println("First Name: " + exp.getPassword());
+
+		return "welcome";
+	}
+	
+	@GetMapping("/check/balance")
 	public String userInfo(@SessionAttribute("exp") Expense exp) {
 
 		System.out.println("Email: " + exp.getName());
