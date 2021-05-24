@@ -1,12 +1,12 @@
-package com.demo.ExpenseMapper;
+package com.demo.expense.mapper;
 
 import java.util.List;
-import com.demo.ExpenseTracker.model.City;
-
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import com.demo.expensetracker.model.City;
 
 
 @Mapper

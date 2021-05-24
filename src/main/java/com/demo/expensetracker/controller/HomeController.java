@@ -1,11 +1,8 @@
-package com.demo.ExpenseTracker.controller;
+package com.demo.expensetracker.controller;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-//import com.demo.ExpenseTracker.model.Expense;
-import com.demo.ExpenseMapper.CityMapper;
 
 //import com.demo.ExpenseTracker.Expdao.ExpDao;
 
@@ -21,13 +18,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.expense.mapper.CityMapper;
 
 //import com.demo.ExpenseTracker.model.Expense;
 //import com.demo.ExpenseTracker.model.ExpenseTrackerModel;
-//import com.demo.ExpenseTracker.service.ExpenseService;
+//
+//import com.demo.ExpenseTracker.Expdao.ExpDao;
+import com.demo.expense.mapper.*;
 
-
-@Controller
+@RestController
+@RequestMapping(value = "/")
 public class HomeController {
 
 //	@Autowired
@@ -42,12 +44,23 @@ public class HomeController {
 //	private ExpenseService expenseService;
 
 	
-	@RequestMapping("/")
-	public String home() {
-		return "welcome";
-	}
-/*
+//	@RequestMapping("/")
+//	public String home() {
+//		return "welcome";
+//	}
+	
+	@RequestMapping(value = "1", method = RequestMethod.GET)
+    public <T> T listUsers() {
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        map.put("one", "two");
+        map.put("three", "four");
+        map.put("five", "six");
+        map.put("seven", "eight");
+        
+        return (T) map;
+    }
 
+	/*
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterLogin() {
 		System.out.println("inside login get");
@@ -63,7 +76,7 @@ public class HomeController {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		
-		 model.addAttribute("command", new Expense()); 
+//		 model.addAttribute("command", new Expense()); 
 		System.out.println("inside register get");
 		return "register";
 	} 
@@ -75,7 +88,8 @@ public class HomeController {
 		dao.save(exp);
 		System.out.println("inside register post");
 		return "transactionPage";
-	}*/
+	}
+	*/
 	
     @RequestMapping(value = "/city", method = RequestMethod.GET)
     public <T> T getCity() {
