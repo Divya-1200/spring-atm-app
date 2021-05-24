@@ -17,7 +17,7 @@
 <form action="login/form" method="post">
 	<div class="form-group">
     	<label for="exampleFormControlInput1">Email</label>
-    	<input type="email" class="form-control" name="username" id="exampleFormControlInput1" style="width: 300px;">
+    	<input type="email" class="form-control" name="name" id="exampleFormControlInput1" style="width: 300px;">
    </div>
    <div class="form-group">
     	<label for="exampleFormControlInput1">Password</label>

@@ -98,34 +98,56 @@ public class HomeController {
 
 	
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterLogin() {
+	public String enterLogin(Expense exp) {
+		System.out.println("Username= "+ exp.getName());
+		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login get");
 		return "login";
 	} 
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String loginForm() {
+	public String loginForm(Expense exp) {
+		System.out.println("Username= "+ exp.getName());
+		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login post");
-		return "transactionPage";
+		try {
+			Expense output = cityMapper.findByUser(exp.getName(), exp.getPassword());
+			if(output != null) {
+				return "transactionPage";
+			}
+			
+		}
+		catch(Exception e){
+			return "error";
+		}
+		
+		return "error";
 	}
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterRegister(Expense exp) {
+		
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
-//		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
-		
-//		 model.addAttribute("command", new Expense()); 
 		System.out.println("inside register get");
 		return "register";
 	} 
+	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
 	public String RegisterForm(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
-		cityMapper.insertCity(exp.getName(), exp.getPassword(), "0");
+		try {
+			cityMapper.insertUser(exp.getName(), exp.getPassword(), 0);
+			
+		}
+		catch(Exception e){
+			return "error";
+		}
+		
 	
 		System.out.println("inside register post");
 		return "transactionPage";
 	}
+	
 	/*
 	
     @RequestMapping(value = "/city", method = RequestMethod.GET)
