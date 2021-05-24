@@ -24,7 +24,7 @@
 	</a>
 	<br>
 	<br>
-	<a href="">
+	<a href="/check">
 		<button type="button" class="btn btn-primary">Check balance</button>
 	</a>
 </div>

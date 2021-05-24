@@ -104,6 +104,7 @@ public class HomeController {
 		System.out.println("inside login get");
 		return "login";
 	} 
+	
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
 	public String loginForm(Expense exp) {
 		System.out.println("Username= "+ exp.getName());
