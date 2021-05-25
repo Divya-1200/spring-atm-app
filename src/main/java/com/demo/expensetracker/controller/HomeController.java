@@ -7,12 +7,15 @@ package com.demo.expensetracker.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 
 import com.demo.expense.mapper.CityMapper;
 import com.demo.expensetracker.model.Expense;
@@ -96,49 +99,132 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String loginForm(@ModelAttribute("exp")  Expense exp) {
+	public String loginForm(@ModelAttribute("exp")  Expense exp, Model model) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login post");
 		try {
 			Expense output = cityMapper.findByUser(exp.getName(), exp.getPassword());
 			if(output != null) {
-				return "transactionPage";
+				return "redirect:/transactionPage";
 			}
 			
 		}
 		catch(Exception e){
+			model.addAttribute("msg", "Incorrect username and password");
 			return "error";
 		}
-		
+		model.addAttribute("msg", "Incorrect username and password");
 		return "error";
 	}
 	
-	@GetMapping("/deposit")
-	public String depositAmt(@SessionAttribute("exp") Expense exp) {
+	@RequestMapping(value="/deposit")
+	public String depositPage(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+		
+		if(exp.getName() != null)
+			return "deposit";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+		}
+	}
+	
+	
+	@RequestMapping(value="/deposit/amt" , method = {RequestMethod.POST,RequestMethod.GET})
+	public String depositAmt(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
 
-		System.out.println("Email: " + exp.getName());
-		System.out.println("First Name: " + exp.getPassword());
+		System.out.println("deposit Email: " + exp.getName());
+		System.out.println("deposit First Name: " + exp.getPassword());
+		System.out.println("deposit amount:" +exp.getAmount());	
+		if(exp.getName() != null) {
+			try {
+				cityMapper.depositBalance(exp.getName(), exp.getAmount());
+				return "redirect:/transactionPage";
+				
+			}
+			catch(Exception e){
+				model.addAttribute("msg", "Error Occured try again");
+				return "error";
+				
+			}
+			
+		}
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
 
-		return "welcome";
+		}
+
+		
+		
 	}
 	
 	@GetMapping("/withdrawal")
-	public String withdrawalAmt(@SessionAttribute("exp") Expense exp) {
+	public String withdrawal(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+		
+		if(exp.getName() != null)
+			return "withdrawal";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+		}
 
-		System.out.println("Email: " + exp.getName());
-		System.out.println("First Name: " + exp.getPassword());
-
-		return "welcome";
+		
 	}
 	
+	@RequestMapping(value = "/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
+	public String withdrawalAmt(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+
+		System.out.println("withdraw Email: " + exp.getName());
+		System.out.println("withdraw First Name: " + exp.getPassword());
+		System.out.println("withdraw First Name: " + exp.getAmount());
+		int balance = cityMapper.findBalance(exp.getName());
+		try {
+			if(balance>=exp.getAmount()) {
+
+				cityMapper.withdrawBalance(exp.getName(), exp.getAmount());
+				return "redirect:/transactionPage";
+			}
+			else {
+				model.addAttribute("msg", "Insufficient Balance");
+				return "error";
+			}
+		}
+		catch(Exception e){
+				model.addAttribute("msg", "Error Occured try again");
+				return "error";
+		}
+	}
+		
+
 	@GetMapping("/check/balance")
-	public String userInfo(@SessionAttribute("exp") Expense exp) {
+	public String userInfo(@SessionAttribute("exp") Expense exp, Model model) {
 
-		System.out.println("Email: " + exp.getName());
-		System.out.println("First Name: " + exp.getPassword());
-
-		return "welcome";
+		System.out.println("balance Email: " + exp.getName());
+		System.out.println("balance First Name: " + exp.getPassword());
+		if(exp.getName() != null) {
+			try {
+				int balance = cityMapper.findBalance(exp.getName());
+				model.addAttribute("balance", balance);
+				return "checkBalance";
+				
+			}
+			catch(Exception e) {
+				model.addAttribute("msg", "Error occured try again");
+				return "error";
+			}
+			
+		}
+		else {
+			model.addAttribute("msg", "Login Required");
+			return "error";
+			
+		}
+		
+		
+		
+		
+		
 	}
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterRegister(Expense exp) {
@@ -150,7 +236,7 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String RegisterForm(Expense exp) {
+	public String RegisterForm(Expense exp, Model model) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		try {
@@ -158,12 +244,37 @@ public class HomeController {
 			
 		}
 		catch(Exception e){
+			model.addAttribute("msg", "Username password already exists");
 			return "error";
 		}
 		
 	
 		System.out.println("inside register post");
-		return "transactionPage";
+		return "redirect:/transactionPage";
+//		return "transactionPage";
+	}
+	
+	@GetMapping("/logout")
+	public String closeSession(@ModelAttribute("exp") Expense exp, WebRequest request, SessionStatus status) {
+		
+		status.setComplete();
+	    request.removeAttribute("exp", WebRequest.SCOPE_SESSION);
+		return "welcome";
+	}
+	
+	@GetMapping("/transactionPage")
+	public String transactionPage(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model ) {
+		
+		if(exp.getName() != null)
+			return "transactionPage";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+			
+		}
+			
+	
+		
 	}
 	
 	/*

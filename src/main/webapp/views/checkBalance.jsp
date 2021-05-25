@@ -12,32 +12,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-<div class="container pt-5">
+<p>Register page</p>
 
-	<a href="/deposit">
-		<button type="button" class="btn btn-primary">Deposit</button>
-	</a>
-	<br>
-	<br>
-	<a href="/withdrawal">
-		<button type="button" class="btn btn-primary">Withdraw</button>
-	</a>
-	<br>
-	<br>
-	<a href="/check/balance">
-		<button type="button" class="btn btn-primary">Check balance</button>
-	</a>
-	<br>
-	<br>
-	<a href="/logout">
-		<button type="button" class="btn btn-danger">Logout</button>
-	</a>
+<div class="container">
+<h2>Your balance is ${balance}</h2>
+<a href="/transactionPage">Go back</a>
 </div>
 
 
 
-
-
-
 </body>
-</html>
+</html> 

@@ -21,9 +21,15 @@ public interface CityMapper {
 	@Insert("insert into atm (username, password, amount) values (#{name}, #{password}, #{amount})") 
 	void insertUser(@Param("name")String name , @Param("password") String password, @Param("amount") int amount);
 	
-	@Update("update city set state = #{state} where name = #{city}")
-	void updateCity(@Param("state") String state, @Param("city") String city);
+	@Update("update atm set amount = amount + #{amount} where username = #{name}")
+	void depositBalance(@Param("name") String name, @Param("amount") int amount);
 	
 	@Select("select * from atm where username = #{name} and password = #{password}")
 	Expense findByUser(@Param("name") String name, @Param("password") String password);
+	
+	@Select("select amount from atm where username = #{name}")
+	int findBalance(@Param("name") String name);
+	
+	@Update("update atm set amount = amount - #{amount} where username = #{name}")
+	void withdrawBalance(@Param("name") String name, @Param("amount") int amount);
 }
