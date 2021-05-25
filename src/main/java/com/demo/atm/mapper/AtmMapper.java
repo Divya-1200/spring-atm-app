@@ -11,12 +11,6 @@ import com.demo.atm.model.Atm;
 
 @Mapper
 public interface AtmMapper {
-
-//	@Select("select * from city where state = #{state} limit 1")
-//	City findByState(@Param("state") String state);
-//	
-//	@Select("select * from city where state = #{state}")
-//	List<City> findByStates(@Param("state") String state);
 	
 	@Insert("insert into atm (username, password, amount) values (#{name}, #{password}, #{amount})") 
 	void insertUser(@Param("name")String name , @Param("password") String password, @Param("amount") int amount);
