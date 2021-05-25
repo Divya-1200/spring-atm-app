@@ -12,11 +12,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-<p>Register page</p>
 
-<div class="container">
+
+<div class="container text-center pt-5">
 <h2>Your balance is ${balance}</h2>
-<a href="/transactionPage">Go back</a>
+
+<a href="/transactionPage">
+	<button type="button" class="btn btn-primary ">Go Back</button>
+</a>
 </div>
 
 

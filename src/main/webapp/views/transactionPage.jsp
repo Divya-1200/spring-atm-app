@@ -12,10 +12,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-<div class="container pt-5">
-
+<div class="container text-center pt-5">
+	<h2 class="pb-5">Transactions</h2>
 	<a href="/deposit">
-		<button type="button" class="btn btn-primary">Deposit</button>
+		<button type="button" class="btn btn-primary ">Deposit</button>
 	</a>
 	<br>
 	<br>
@@ -25,12 +25,12 @@
 	<br>
 	<br>
 	<a href="/check/balance">
-		<button type="button" class="btn btn-primary">Check balance</button>
+		<button type="button" class="btn btn-primary ">Check balance</button>
 	</a>
 	<br>
 	<br>
 	<a href="/logout">
-		<button type="button" class="btn btn-danger">Logout</button>
+		<button type="button" class="btn btn-danger ">Logout</button>
 	</a>
 </div>
 

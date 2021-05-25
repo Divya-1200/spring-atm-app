@@ -46,7 +46,7 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String RegisterForm(Atm exp, Model model) {
+	public String RegisterForm(@ModelAttribute("exp")  Atm exp, Model model) {
 
 		try {
 			atmMapper.insertUser(exp.getName(), exp.getPassword(), 0);
@@ -148,7 +148,7 @@ public class HomeController {
 				}
 				else {
 					model.addAttribute("msg", "Insufficient Balance");
-					return "error";
+					return "errorwithdraw";
 				}
 			}
 			catch(Exception e){
@@ -194,7 +194,7 @@ public class HomeController {
 		
 		status.setComplete();
 	    request.removeAttribute("exp", WebRequest.SCOPE_SESSION);
-		return "welcome";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/transactionPage")

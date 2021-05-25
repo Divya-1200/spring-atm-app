@@ -13,10 +13,12 @@
 
 
 
-<div class="container">
+<div class="container text-center pt-5">
 <p>Error occured</p>
-<h2>${msg}</h2>
-<a href="/">Go back</a>
+<h2 class="pt-3">${msg}</h2>
+<a href="/">
+	<button type="button" class="btn btn-primary ">Go Back</button>
+</a>
 </div>
 
 
