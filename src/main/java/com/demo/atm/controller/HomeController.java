@@ -18,7 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import com.demo.atm.mapper.AtmMapper;
-import com.demo.atm.model.Expense;
+import com.demo.atm.model.Atm;
 
 
 @Controller
@@ -37,8 +37,8 @@ public class HomeController {
 //	private ExpenseService expenseService;
 
 	@ModelAttribute("exp")
-	   public Expense setUpUserForm() {
-	      return new Expense();
+	   public Atm setUpUserForm() {
+	      return new Atm();
 	   }
 	
 	@RequestMapping("/")
@@ -91,7 +91,7 @@ public class HomeController {
 	
     
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterLogin(Expense exp) {
+	public String enterLogin(Atm exp) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login get");
@@ -99,12 +99,12 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String loginForm(@ModelAttribute("exp")  Expense exp, Model model) {
+	public String loginForm(@ModelAttribute("exp")  Atm exp, Model model) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		System.out.println("inside login post");
 		try {
-			Expense output = cityMapper.findByUser(exp.getName(), exp.getPassword());
+			Atm output = cityMapper.findByUser(exp.getName(), exp.getPassword());
 			if(output != null) {
 				return "redirect:/transactionPage";
 			}
@@ -119,7 +119,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/deposit")
-	public String depositPage(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+	public String depositPage(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
 		
 		if(exp.getName() != null)
 			return "deposit";
@@ -131,7 +131,7 @@ public class HomeController {
 	
 	
 	@RequestMapping(value="/deposit/amt" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String depositAmt(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+	public String depositAmt(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
 
 		System.out.println("deposit Email: " + exp.getName());
 		System.out.println("deposit First Name: " + exp.getPassword());
@@ -160,7 +160,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/withdrawal")
-	public String withdrawal(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+	public String withdrawal(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
 		
 		if(exp.getName() != null)
 			return "withdrawal";
@@ -173,7 +173,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
-	public String withdrawalAmt(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model) {
+	public String withdrawalAmt(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
 
 		System.out.println("withdraw Email: " + exp.getName());
 		System.out.println("withdraw First Name: " + exp.getPassword());
@@ -198,7 +198,7 @@ public class HomeController {
 		
 
 	@GetMapping("/check/balance")
-	public String userInfo(@SessionAttribute("exp") Expense exp, Model model) {
+	public String userInfo(@SessionAttribute("exp") Atm exp, Model model) {
 
 		System.out.println("balance Email: " + exp.getName());
 		System.out.println("balance First Name: " + exp.getPassword());
@@ -227,7 +227,7 @@ public class HomeController {
 		
 	}
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterRegister(Expense exp) {
+	public String enterRegister(Atm exp) {
 		
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
@@ -236,7 +236,7 @@ public class HomeController {
 	} 
 	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String RegisterForm(Expense exp, Model model) {
+	public String RegisterForm(Atm exp, Model model) {
 		System.out.println("Username= "+ exp.getName());
 		System.out.println("password= "+ exp.getPassword());
 		try {
@@ -255,7 +255,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/logout")
-	public String closeSession(@ModelAttribute("exp") Expense exp, WebRequest request, SessionStatus status) {
+	public String closeSession(@ModelAttribute("exp") Atm exp, WebRequest request, SessionStatus status) {
 		
 		status.setComplete();
 	    request.removeAttribute("exp", WebRequest.SCOPE_SESSION);
@@ -263,7 +263,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/transactionPage")
-	public String transactionPage(@ModelAttribute("exp") @SessionAttribute("exp") Expense exp, Model model ) {
+	public String transactionPage(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model ) {
 		
 		if(exp.getName() != null)
 			return "transactionPage";

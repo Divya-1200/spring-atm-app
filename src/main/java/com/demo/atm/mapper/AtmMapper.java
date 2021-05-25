@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.demo.atm.model.Expense;
+import com.demo.atm.model.Atm;
 
 
 @Mapper
@@ -25,7 +25,7 @@ public interface AtmMapper {
 	void depositBalance(@Param("name") String name, @Param("amount") int amount);
 	
 	@Select("select * from atm where username = #{name} and password = #{password}")
-	Expense findByUser(@Param("name") String name, @Param("password") String password);
+	Atm findByUser(@Param("name") String name, @Param("password") String password);
 	
 	@Select("select amount from atm where username = #{name}")
 	int findBalance(@Param("name") String name);
