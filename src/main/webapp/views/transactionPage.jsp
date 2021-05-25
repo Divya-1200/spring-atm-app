@@ -12,28 +12,101 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
-<div class="container text-center pt-5">
-	<h2 class="pb-5">Transactions</h2>
-	<a href="/deposit">
-		<button type="button" class="btn btn-primary ">Deposit</button>
-	</a>
-	<br>
-	<br>
-	<a href="/withdrawal">
-		<button type="button" class="btn btn-primary">Withdraw</button>
-	</a>
-	<br>
-	<br>
-	<a href="/check/balance">
-		<button type="button" class="btn btn-primary ">Check balance</button>
-	</a>
-	<br>
-	<br>
-	<a href="/logout">
-		<button type="button" class="btn btn-danger ">Logout</button>
-	</a>
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+
+<style>
+body {
+    background-color: #FFEBEE;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.card {
+    width: 400px;
+    background-color: #fff;
+    border: none;
+    border-radius: 12px
+}
+
+
+.form-control {
+    margin-top: 10px;
+    height: 48px;
+    border: 2px solid #eee;
+    border-radius: 10px
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #039BE5
+}
+
+
+.confirm-button {
+    height: 50px;
+    border-radius: 10px
+}
+</style>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+	
+	
+    <div class="card px-1 py-4">
+        <div class="card-body">
+            <h2>Transactions</h2>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/deposit">
+                    <button type="submit" class="btn btn-primary btn-block confirm-button">Deposit</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/withdrawal">
+                    <button type="submit" class="btn btn-primary btn-block confirm-button">Withdraw</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/check/balance">
+                    <button type="submit" class="btn btn-primary btn-block confirm-button">Balance enquiry</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/logout">
+                    <button type="submit" class="btn btn-danger btn-block confirm-button">Logout</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            
+        </div>
+        
+        
+    </div>
+    
 </div>
 
+            
+      
+ </div>
+    
+</div>
 
 
 

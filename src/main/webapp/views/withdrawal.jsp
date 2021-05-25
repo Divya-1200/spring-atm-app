@@ -11,25 +11,68 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+
 <style>
-input{
-margin: 0 auto;
+body {
+    background-color: #FFEBEE;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.card {
+    width: 400px;
+    background-color: #fff;
+    border: none;
+    border-radius: 12px
+}
+
+
+.form-control {
+    margin-top: 10px;
+    height: 48px;
+    border: 2px solid #eee;
+    border-radius: 10px
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #039BE5
+}
+
+
+.confirm-button {
+    height: 50px;
+    border-radius: 10px
 }
 </style>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+	
+	<form action="withdraw/amt" method="post">
+    <div class="card px-1 py-4">
+        <div class="card-body">
+            <h2>Withdraw</h2>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    	<label>Enter Amount to be withdrawed</labe>
+                        <div class="input-group"> <input class="form-control" type="text" name="amount" placeholder="Enter amount" autocomplete="off" required="required"> </div>
+                    </div>
+                </div>
+            </div>
 
-
-<div class="container text-center pt-5">
-<form action="withdraw/amt" method="post">
-
-   <div class="form-group">
-    	<label for="exampleFormControlInput1">Enter the amount to be withdrawed</label>
-    	<input type="text" class="form-control" name="amount" id="exampleFormControlInput1" required="required" autocomplete="off" style="width: 300px;">
-   </div>
-   <button type="submit" class="btn btn-primary">Withdraw</button>
-
-  
-</form>
-<a href="/transactionPage">Go back</a>
+            <button type="submit" class="btn btn-primary btn-block confirm-button">Withdraw</button>
+            <div class="text-center">
+            	<a href="transactionPage">Go back</a>
+            </div>
+            
+        </div>
+        
+        </form> 
+    </div>
+    
 </div>
 
 

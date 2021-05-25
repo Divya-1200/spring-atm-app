@@ -9,31 +9,86 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+
 <style>
+body {
+    background-color: #FFEBEE;
+    font-family: 'Noto Sans JP', sans-serif;
+}
 
+.card {
+    width: 400px;
+    background-color: #fff;
+    border: none;
+    border-radius: 12px
+}
+
+
+.form-control {
+    margin-top: 10px;
+    height: 48px;
+    border: 2px solid #eee;
+    border-radius: 10px
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #039BE5
+}
+
+
+.confirm-button {
+    height: 50px;
+    border-radius: 10px
+}
 </style>
-<div class="container pt-5 text-center">
-	<h2>Automated Teller Machine</h2>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
 	
-</div>
-<div class="container login-button text-center">
-	<div class="row pt-4">
-		<div class="col-12">
-			<a href="register">
-				<button type="button" class="btn btn-primary">Register</button>
-			</a>
-		</div>
-	</div>
-	<div class="row pt-4">
-		<div class="col-12">
-			<a href="login">
-				<button type="button" class="btn btn-primary">Login</button>
-			</a>
-		</div>
-	</div>
+	
+    <div class="card px-1 py-4">
+        <div class="card-body">
+        	<div class="text-center pb-2">
+            <h2>ATM</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/register">
+                    <button type="submit" class="btn btn-primary btn-block confirm-button">Register</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                    <a href="/login">
+                    <button type="submit" class="btn btn-primary btn-block confirm-button">Login</button>
+                    </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        
+    </div>
+    
 </div>
 
-	
+            
+      
+ </div>
+    
+</div>
+
+
+
+
+
+
  
 </body>
 </html>
