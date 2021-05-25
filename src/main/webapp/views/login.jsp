@@ -22,7 +22,7 @@ margin: 0 auto;
 	<h2>Login page</h2>
 	<div class="form-group">
     	<label for="exampleFormControlInput1">Email</label>
-    	<input type="email" class="form-control" name="name" id="exampleFormControlInput1" required="required" style="width: 300px;">
+    	<input type="email" class="form-control" name="name" id="exampleFormControlInput1" required="required" autocomplete="off" style="width: 300px;">
    </div>
    <div class="form-group">
     	<label for="exampleFormControlInput1">Password</label>

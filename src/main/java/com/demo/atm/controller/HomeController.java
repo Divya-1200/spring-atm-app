@@ -18,7 +18,7 @@ import com.demo.atm.model.Atm;
 
 
 @Controller
-@SessionAttributes("exp")
+@SessionAttributes("atm")
 public class HomeController {
 
  
@@ -28,7 +28,7 @@ public class HomeController {
 	
 
 
-	@ModelAttribute("exp")
+	@ModelAttribute("atm")
 	   public Atm setUpUserForm() {
 	      return new Atm();
 	   }
@@ -40,16 +40,16 @@ public class HomeController {
 	}
 
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterRegister(Atm exp) {
+	public String enterRegister(Atm atm) {
 
 		return "register";
 	} 
 	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String RegisterForm(@ModelAttribute("exp")  Atm exp, Model model) {
+	public String RegisterForm(@ModelAttribute("atm")  Atm atm, Model model) {
 
 		try {
-			atmMapper.insertUser(exp.getName(), exp.getPassword(), 0);
+			atmMapper.insertUser(atm.getName(), atm.getPassword(), 0);
 			
 		}
 		catch(Exception e){
@@ -62,16 +62,16 @@ public class HomeController {
 	}
     
 	@RequestMapping(value="/login" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String enterLogin(Atm exp) {
+	public String enterLogin(Atm atm) {
 
 		return "login";
 	} 
 	
 	@RequestMapping(value="/login/form" , method = {RequestMethod.POST, RequestMethod.GET})
-	public String loginForm(@ModelAttribute("exp")  Atm exp, Model model) {
+	public String loginForm(@ModelAttribute("atm")  Atm atm, Model model) {
 
 		try {
-			Atm output = atmMapper.findByUser(exp.getName(), exp.getPassword());
+			Atm output = atmMapper.findByUser(atm.getName(), atm.getPassword());
 			if(output != null) {
 				return "redirect:/transactionPage";
 			}
@@ -86,9 +86,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/deposit")
-	public String depositPage(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
+	public String depositPage(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
 		
-		if(exp.getName() != null)
+		if(atm.getName() != null)
 			return "deposit";
 		else {
 			model.addAttribute("msg", "Login required");
@@ -98,11 +98,11 @@ public class HomeController {
 	
 	
 	@RequestMapping(value="/deposit/amt" , method = {RequestMethod.POST,RequestMethod.GET})
-	public String depositAmt(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
+	public String depositAmt(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
 
-		if(exp.getName() != null) {
+		if(atm.getName() != null) {
 			try {
-				atmMapper.depositBalance(exp.getName(), exp.getAmount());
+				atmMapper.depositBalance(atm.getName(), atm.getAmount());
 				return "redirect:/transactionPage";
 				
 			}
@@ -124,9 +124,9 @@ public class HomeController {
 	}
 	
 	@GetMapping("/withdrawal")
-	public String withdrawal(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
+	public String withdrawal(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
 		
-		if(exp.getName() != null)
+		if(atm.getName() != null)
 			return "withdrawal";
 		else {
 			model.addAttribute("msg", "Login required");
@@ -137,13 +137,13 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
-	public String withdrawalAmt(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
-		if(exp.getName() != null) {
-			int balance = atmMapper.findBalance(exp.getName());
+	public String withdrawalAmt(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
+		if(atm.getName() != null) {
+			int balance = atmMapper.findBalance(atm.getName());
 			try {
-				if(balance>=exp.getAmount()) {
+				if(balance>=atm.getAmount()) {
 
-					atmMapper.withdrawBalance(exp.getName(), exp.getAmount());
+					atmMapper.withdrawBalance(atm.getName(), atm.getAmount());
 					return "redirect:/transactionPage";
 				}
 				else {
@@ -165,11 +165,11 @@ public class HomeController {
 		
 
 	@GetMapping("/check/balance")
-	public String userInfo(@SessionAttribute("exp") Atm exp, Model model) {
+	public String userInfo(@SessionAttribute("atm") Atm atm, Model model) {
 
-		if(exp.getName() != null) {
+		if(atm.getName() != null) {
 			try {
-				int balance = atmMapper.findBalance(exp.getName());
+				int balance = atmMapper.findBalance(atm.getName());
 				model.addAttribute("balance", balance);
 				return "checkBalance";
 				
@@ -190,17 +190,17 @@ public class HomeController {
 
 	
 	@GetMapping("/logout")
-	public String closeSession(@ModelAttribute("exp") Atm exp, WebRequest request, SessionStatus status) {
+	public String closeSession(@ModelAttribute("atm") Atm atm, WebRequest request, SessionStatus status) {
 		
 		status.setComplete();
-	    request.removeAttribute("exp", WebRequest.SCOPE_SESSION);
+	    request.removeAttribute("atm", WebRequest.SCOPE_SESSION);
 		return "redirect:/";
 	}
 	
 	@GetMapping("/transactionPage")
-	public String transactionPage(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model ) {
+	public String transactionPage(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model ) {
 		
-		if(exp.getName() != null)
+		if(atm.getName() != null)
 			return "transactionPage";
 		else {
 			model.addAttribute("msg", "Login required");

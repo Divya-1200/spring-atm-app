@@ -23,7 +23,7 @@ margin: 0 auto;
 
    <div class="form-group">
     	<label for="exampleFormControlInput1">Enter the amount to be withdrawed</label>
-    	<input type="text" class="form-control" name="amount" id="exampleFormControlInput1" required="required" style="width: 300px;">
+    	<input type="text" class="form-control" name="amount" id="exampleFormControlInput1" required="required" autocomplete="off" style="width: 300px;">
    </div>
    <button type="submit" class="btn btn-primary">Withdraw</button>
 
