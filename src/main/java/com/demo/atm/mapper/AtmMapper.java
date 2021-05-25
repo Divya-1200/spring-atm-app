@@ -1,4 +1,4 @@
-package com.demo.expense.mapper;
+package com.demo.atm.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.demo.expensetracker.model.Expense;
+import com.demo.atm.model.Expense;
 
 
 @Mapper
-public interface CityMapper {
+public interface AtmMapper {
 
 //	@Select("select * from city where state = #{state} limit 1")
 //	City findByState(@Param("state") String state);

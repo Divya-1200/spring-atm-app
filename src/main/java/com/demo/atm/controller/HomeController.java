@@ -1,4 +1,4 @@
-package com.demo.expensetracker.controller;
+package com.demo.atm.controller;
 
 //import com.demo.ExpenseTracker.Expdao.ExpDao;
 
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import com.demo.expense.mapper.CityMapper;
-import com.demo.expensetracker.model.Expense;
+import com.demo.atm.mapper.AtmMapper;
+import com.demo.atm.model.Expense;
 
 
 @Controller
@@ -29,7 +29,7 @@ public class HomeController {
 //	private ExpenseTrackerModel expenseTracker; 
 	
 	@Autowired
-	private CityMapper cityMapper;
+	private AtmMapper cityMapper;
 	
 //	ExpDao dao;
 

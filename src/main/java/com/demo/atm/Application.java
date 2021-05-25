@@ -1,4 +1,4 @@
-package com.demo.expensetracker;
+package com.demo.atm;
 
 import org.springframework.boot.SpringApplication;
 import org.mybatis.spring.annotation.MapperScan;

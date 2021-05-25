@@ -1,4 +1,4 @@
-package com.demo.expensetracker.model;
+package com.demo.atm.model;
 
 import java.io.Serializable;
 
