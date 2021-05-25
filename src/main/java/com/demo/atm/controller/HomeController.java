@@ -174,25 +174,28 @@ public class HomeController {
 	
 	@RequestMapping(value = "/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
 	public String withdrawalAmt(@ModelAttribute("exp") @SessionAttribute("exp") Atm exp, Model model) {
+		if(exp.getName() != null) {
+			int balance = cityMapper.findBalance(exp.getName());
+			try {
+				if(balance>=exp.getAmount()) {
 
-		System.out.println("withdraw Email: " + exp.getName());
-		System.out.println("withdraw First Name: " + exp.getPassword());
-		System.out.println("withdraw First Name: " + exp.getAmount());
-		int balance = cityMapper.findBalance(exp.getName());
-		try {
-			if(balance>=exp.getAmount()) {
-
-				cityMapper.withdrawBalance(exp.getName(), exp.getAmount());
-				return "redirect:/transactionPage";
+					cityMapper.withdrawBalance(exp.getName(), exp.getAmount());
+					return "redirect:/transactionPage";
+				}
+				else {
+					model.addAttribute("msg", "Insufficient Balance");
+					return "error";
+				}
 			}
-			else {
-				model.addAttribute("msg", "Insufficient Balance");
-				return "error";
+			catch(Exception e){
+					model.addAttribute("msg", "Error Occured try again");
+					return "error";
 			}
 		}
-		catch(Exception e){
-				model.addAttribute("msg", "Error Occured try again");
-				return "error";
+		else {
+			model.addAttribute("msg", "Login Required");
+			return "error";
+			
 		}
 	}
 		
