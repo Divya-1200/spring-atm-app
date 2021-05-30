@@ -188,7 +188,6 @@ public class HomeController {
 		
 	}
 
-	
 	@GetMapping("/logout")
 	public String closeSession(@ModelAttribute("atm") Atm atm, WebRequest request, SessionStatus status) {
 		
