@@ -26,12 +26,10 @@ public class HomeController {
 	@Autowired
 	private AtmMapper atmMapper;
 	
-
-
 	@ModelAttribute("atm")
 	   public Atm setUpUserForm() {
 	      return new Atm();
-	   }
+	 }
 	
 	@RequestMapping("/")
 	public String home() {
@@ -118,9 +116,6 @@ public class HomeController {
 			return "error";
 
 		}
-
-		
-		
 	}
 	
 	@GetMapping("/withdrawal")
@@ -132,7 +127,6 @@ public class HomeController {
 			model.addAttribute("msg", "Login required");
 			return "error";
 		}
-
 		
 	}
 	
