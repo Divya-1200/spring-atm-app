@@ -8,6 +8,8 @@ public class Admin implements Serializable{
 
 	private String password;
 	
+	private int amount;
+	
 	public String getName() {
 		return this.name;
 	}
@@ -22,6 +24,14 @@ public class Admin implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public int getAmount() {
+		return this.amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
 }

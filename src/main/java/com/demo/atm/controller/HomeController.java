@@ -14,11 +14,12 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import com.demo.atm.mapper.AtmMapper;
+import com.demo.atm.model.Admin;
 import com.demo.atm.model.Atm;
 
 
 @Controller
-@SessionAttributes("atm")
+@SessionAttributes({"atm","admin"})
 public class HomeController {
 
  
@@ -29,6 +30,11 @@ public class HomeController {
 	@ModelAttribute("atm")
 	   public Atm setUpUserForm() {
 	      return new Atm();
+	}
+	
+	@ModelAttribute("admin")
+	   public Admin setUpAdminForm() {
+	      return new Admin();
 	 }
 	
 	@RequestMapping("/")
@@ -36,12 +42,20 @@ public class HomeController {
 
 		return "welcome";
 	}
+	
+	/*    USER PAGE */
 
 	@RequestMapping(value="/register" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterRegister(Atm atm) {
 
 		return "register";
-	} 
+	}
+	
+	@RequestMapping(value="/admin" , method = {RequestMethod.POST,RequestMethod.GET})
+	public String enterAdmin(Admin admin) {
+
+		return "admin";
+	}
 	
 	@RequestMapping(value="/register/form" , method = {RequestMethod.POST, RequestMethod.GET})
 	public String RegisterForm(@ModelAttribute("atm")  Atm atm, Model model) {
@@ -83,6 +97,7 @@ public class HomeController {
 		return "error";
 	}
 	
+		
 	@RequestMapping(value="/deposit")
 	public String depositPage(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
 		
@@ -181,14 +196,6 @@ public class HomeController {
 		}
 		
 	}
-
-	@GetMapping("/logout")
-	public String closeSession(@ModelAttribute("atm") Atm atm, WebRequest request, SessionStatus status) {
-		
-		status.setComplete();
-	    request.removeAttribute("atm", WebRequest.SCOPE_SESSION);
-		return "redirect:/";
-	}
 	
 	@GetMapping("/transactionPage")
 	public String transactionPage(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model ) {
@@ -202,5 +209,165 @@ public class HomeController {
 		}
 			
 	}
+
+	@GetMapping("/logout")
+	public String closeSession(@ModelAttribute("atm") Atm atm, WebRequest request, SessionStatus status) {
+		
+		status.setComplete();
+	    request.removeAttribute("atm", WebRequest.SCOPE_SESSION);
+		return "redirect:/";
+	}
+	
+	/*    ADMIN PAGE */
+	
+	@RequestMapping(value="admin/form" , method = {RequestMethod.POST, RequestMethod.GET})
+	public String adminLoginForm(@ModelAttribute("admin")  Admin admin, Model model) {
+
+		try {
+			Admin output = atmMapper.findByAdmin(admin.getName(), admin.getPassword());
+			
+			if(output != null) {
+//				System.out.println(admin.getName());
+				return "redirect:/admin/transactionPage";
+			}
+			
+		}
+		catch(Exception e){
+			model.addAttribute("msg", "Incorrect username and password");
+			return "error";
+		}
+		model.addAttribute("msg", "Incorrect username and password");
+		return "error";
+	}
+	
+	@GetMapping("/admin/transactionPage")
+	public String AdminTransactionPage(@ModelAttribute("admin") @SessionAttribute("admin") Admin admin, Model model ) {
+		
+//		System.out.println(admin.getName());
+		if(admin.getName() != null)
+			return "adminTansactionPage";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+			
+		}
+			
+	}
+	
+	@RequestMapping(value="/admin/deposit")
+	public String adminDepositPage(@ModelAttribute("admin") @SessionAttribute("admin") Admin admin, Model model) {
+		
+		if(admin.getName() != null)
+			return "adminDeposit";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+		}
+	}
+	
+	
+	@RequestMapping(value="/admin/deposit/amt" , method = {RequestMethod.POST,RequestMethod.GET})
+	public String adminDepositAmt(@ModelAttribute("admin") @SessionAttribute("admin") Admin admin, Model model) {
+
+		if(admin.getName() != null) {
+			try {
+//				System.out.println(admin.getAmount());
+				atmMapper.adminDepositBalance(admin.getAmount());
+				return "redirect:/admin/transactionPage";
+				
+			}
+			catch(Exception e){
+				System.out.println(e);
+				model.addAttribute("msg", "Error Occured try again");
+				return "error";
+				
+			}
+			
+		}
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+
+		}
+	}
+	
+	@GetMapping("admin/withdrawal")
+	public String adminWithdrawal(@ModelAttribute("admin") @SessionAttribute("admin") Admin admin, Model model) {
+		
+		if(admin.getName() != null)
+			return "adminWithdrawal";
+		else {
+			model.addAttribute("msg", "Login required");
+			return "error";
+		}
+		
+	}
+	
+	@RequestMapping(value = "admin/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
+	public String adminWithdrawalAmt(@ModelAttribute("admin") @SessionAttribute("admin") Admin admin, Model model) {
+		if(admin.getName() != null) {
+			int balance = atmMapper.findAtmBalance();
+//			System.out.println(balance);
+			try {
+				if(balance>=admin.getAmount()) {
+
+					atmMapper.adminWithdrawBalance(admin.getAmount());
+					return "redirect:/admin/transactionPage";
+				}
+				else {
+					model.addAttribute("msg", "Insufficient Balance");
+					return "errorwithdraw";
+				}
+			}
+			catch(Exception e){
+					model.addAttribute("msg", "Error Occured try again");
+					return "error";
+			}
+		}
+		else {
+			model.addAttribute("msg", "Login Required");
+			return "error";
+			
+		}
+	}
+		
+
+	@GetMapping("admin/check/balance")
+	public String adminBalance(@SessionAttribute("admin") Admin admin, Model model) {
+
+		if(admin.getName() != null) {
+			try {
+				System.out.println("inside");
+				int balance = atmMapper.findAtmBalance();
+//				System.out.println(balance);
+				model.addAttribute("balance", balance);
+				return "adminCheckBalance";
+				
+			}
+			catch(Exception e) {
+				model.addAttribute("msg", "Error occured try again");
+				return "error";
+			}
+			
+		}
+		else {
+			model.addAttribute("msg", "Login Required");
+			return "error";
+			
+		}
+		
+	}
+
+	
+	@GetMapping("admin/logout")
+	public String adminCloseSession(@ModelAttribute("admin") Admin admin, WebRequest request, SessionStatus status) {
+		
+		status.setComplete();
+	    request.removeAttribute("admin", WebRequest.SCOPE_SESSION);
+		return "redirect:/";
+	}
+	
+	
+	
 	
 }

@@ -31,9 +31,14 @@ public interface AtmMapper {
 	@Select("select * from admin where username = #{name} and password = #{password}")
 	Admin findByAdmin(@Param("name") String name, @Param("password") String password);
 	
-	@Select("select * from atmbalance where username = #{name} and password = #{password}")
-	int findAtmBalance(@Param("name") String name, @Param("password") String password);
+	@Select("select atmbalance from atmbalance where atm = 'zoho'")
+	int findAtmBalance();
 	
+	@Update("update atmbalance set atmbalance = atmbalance + #{amount} where atm='zoho'")
+	void adminDepositBalance(@Param("amount") int amount);
+	
+	@Update("update atmbalance set atmbalance = atmbalance - #{amount} where atm = 'zoho'")
+	void adminWithdrawBalance(@Param("amount") int amount);
 	
 	
 	
