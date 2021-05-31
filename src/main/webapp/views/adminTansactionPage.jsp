@@ -85,7 +85,7 @@ body {
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                    <a href="admin/logout">
+                    <a href="/admin/logout">
                     <button type="submit" class="btn btn-danger btn-block confirm-button">Logout</button>
                     </a>
                     </div>

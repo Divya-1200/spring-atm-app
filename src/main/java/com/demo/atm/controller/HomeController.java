@@ -116,6 +116,7 @@ public class HomeController {
 		if(atm.getName() != null) {
 			try {
 				atmMapper.depositBalance(atm.getName(), atm.getAmount());
+				atmMapper.adminDepositBalance(atm.getAmount());
 				return "redirect:/transactionPage";
 				
 			}
@@ -149,16 +150,29 @@ public class HomeController {
 	public String withdrawalAmt(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
 		if(atm.getName() != null) {
 			int balance = atmMapper.findBalance(atm.getName());
+			
+			int atmbalance = atmMapper.findAtmBalance();
 			try {
-				if(balance>=atm.getAmount()) {
+				if(atmbalance>=atm.getAmount()) {
+					
+					if(balance>=atm.getAmount()) {
 
-					atmMapper.withdrawBalance(atm.getName(), atm.getAmount());
-					return "redirect:/transactionPage";
+						atmMapper.withdrawBalance(atm.getName(), atm.getAmount());
+						atmMapper.adminWithdrawBalance(atm.getAmount());
+						return "redirect:/transactionPage";
+					}
+					else {
+						model.addAttribute("msg", "Insufficient Balance");
+						return "errorwithdraw";
+					}
+					
 				}
 				else {
-					model.addAttribute("msg", "Insufficient Balance");
+					model.addAttribute("msg", "Insufficient Balance in ATM");
 					return "errorwithdraw";
+					
 				}
+				
 			}
 			catch(Exception e){
 					model.addAttribute("msg", "Error Occured try again");
@@ -337,7 +351,7 @@ public class HomeController {
 
 		if(admin.getName() != null) {
 			try {
-				System.out.println("inside");
+//				System.out.println("inside");
 				int balance = atmMapper.findAtmBalance();
 //				System.out.println(balance);
 				model.addAttribute("balance", balance);
