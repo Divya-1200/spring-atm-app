@@ -53,7 +53,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/admin" , method = {RequestMethod.POST,RequestMethod.GET})
 	public String enterAdmin(Admin admin) {
-
+		System.out.println("here");
 		return "admin";
 	}
 	
