@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.demo.atm.model.Admin;
 import com.demo.atm.model.Atm;
+import com.demo.atm.model.Currency;
 
 
 @Mapper
@@ -41,6 +42,8 @@ public interface AtmMapper {
 	void adminWithdrawBalance(@Param("amount") int amount);
 	
 	
+	@Select("select * from currency where atm='zoho'")
+	Currency checkCurrency();
 	
 	
 	

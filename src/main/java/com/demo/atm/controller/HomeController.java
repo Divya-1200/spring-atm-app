@@ -1,6 +1,9 @@
 package com.demo.atm.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +19,17 @@ import org.springframework.web.context.request.WebRequest;
 import com.demo.atm.mapper.AtmMapper;
 import com.demo.atm.model.Admin;
 import com.demo.atm.model.Atm;
+import com.demo.atm.model.Currency;
 
 
 @Controller
 @SessionAttributes({"atm","admin"})
 public class HomeController {
 
- 
+	
+    public static final int[] currValue = { 2000,500, 200, 100};
+    
+    public  int[] count = { 0, 0, 0, 0};
 	
 	@Autowired
 	private AtmMapper atmMapper;
@@ -147,16 +154,57 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/withdraw/amt", method = {RequestMethod.POST,RequestMethod.GET})
-	public String withdrawalAmt(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm, Model model) {
+	public String withdrawalAmt(@ModelAttribute("atm") @SessionAttribute("atm") Atm atm ,Model model) {
 		if(atm.getName() != null) {
 			int balance = atmMapper.findBalance(atm.getName());
 			
 			int atmbalance = atmMapper.findAtmBalance();
 			try {
 				if(atmbalance>=atm.getAmount()) {
-					
+					System.out.println("requested amount "+atm.getAmount());
 					if(balance>=atm.getAmount()) {
+						
+						List<Integer> currencyCount = new ArrayList<>();
+//						public static final int[] currValue = { 2000, 1000, 500, 100};
+						/* Currency calculation */
+						Currency output = atmMapper.checkCurrency();
 
+						int requestedAmount = atm.getAmount();
+	
+						currencyCount.add(output.getTwoThousand());
+						currencyCount.add(output.getFiveHundred());
+						currencyCount.add(output.getTwoHundred());
+						currencyCount.add(output.getOneHundred());
+							
+						for (int i = 0; i < currencyCount.size(); i++) {
+
+			                if (currValue[i] <= requestedAmount) {
+			                	
+			                    int noteCount = requestedAmount / currValue[i];
+
+			                    if(currencyCount.get(i)>0){
+
+			                        count[i] = noteCount>=currencyCount.get(i)?currencyCount.get(i):noteCount;
+			                        
+			                        int temp = noteCount>=currencyCount.get(i)?0:currencyCount.get(i)- noteCount;
+
+			                        currencyCount.set(i,temp);
+			                        //Need to update in db
+			                        
+			                        System.out.println("notes = "+count[i]+" of "+currValue[i]+" rupees");
+			                        
+			                        atmbalance=atmbalance-(count[i]*currValue[i]);
+			                        //Need to update in db
+			                       
+			                        requestedAmount = requestedAmount -(count[i]*currValue[i]);
+
+			                    }                
+			                }
+			            }
+						
+						
+						
+						
 						atmMapper.withdrawBalance(atm.getName(), atm.getAmount());
 						atmMapper.adminWithdrawBalance(atm.getAmount());
 						return "redirect:/transactionPage";
